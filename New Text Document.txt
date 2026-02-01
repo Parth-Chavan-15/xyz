@@ -1,0 +1,17 @@
+    # --- LOADING BAR FOR STEP 5 (THE FIX) ---
+    st.divider()
+    
+    # This status block keeps the user engaged while the slow API calls run
+    with st.status("🧠 Processing Deep GEO Metrics (This takes ~20s)...", expanded=True) as status:
+        st.write("🛡️ Analyzing Tone & Trust Score...")
+        trust_score = calculate_trust_score(user_data['text'], model)
+        
+        st.write("📊 Calculating Fact Density (AI vs User)...")
+        user_density = calculate_fact_density_smart(user_data['text'], model)
+        ai_density = calculate_fact_density_smart(ai_text, model)
+        
+        st.write("📖 Measuring Readability Complexity...")
+        user_readability = textstat.flesch_reading_ease(user_data['text'])
+        ai_readability = textstat.flesch_reading_ease(ai_text)
+        
+        status.update(label="✅ Deep Analysis Complete", state="complete", expanded=False)
